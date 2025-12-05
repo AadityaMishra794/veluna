@@ -652,73 +652,87 @@ const ShopPage = () => {
         }
 
         .variant-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.55rem 0.65rem;
-          border-radius: 10px;
-          background: #ffffff;
-          box-shadow: 0 2px 8px rgba(244, 194, 194, 0.2);
-        }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(244, 194, 194, 0.2);
+  flex-wrap: wrap;
+}
 
-        .variant-left {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          min-width: 0;
-        }
+.variant-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  flex: 1;
+  min-width: 150px;
+}
 
-        .variant-thumb {
-          width: 46px;
-          height: 46px;
-          border-radius: 9px;
-          object-fit: cover;
-          flex-shrink: 0;
-        }
+.variant-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 
-        .variant-info {
-          display: flex;
-          flex-direction: column;
-          gap: 0.1rem;
-        }
+.variant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1;
+}
 
-        .variant-label {
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: #2f2b26;
-        }
+.variant-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2f2b26;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-        .variant-caption {
-          font-size: 0.72rem;
-          color: #67645D;
-          opacity: 0.8;
-        }
+.variant-caption {
+  font-size: 0.72rem;
+  color: #67645D;
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-        .variant-actions {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          flex-shrink: 0;
-        }
+.variant-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
 
-        .variant-price {
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: #F08FA3;
-        }
+.variant-price {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #F08FA3;
+  white-space: nowrap;
+}
 
-        .variant-add-btn {
-          border-radius: 999px;
-          border: 1px solid #F4C2C2;
-          background: #ffffff;
-          padding: 0.25rem 0.85rem;
-          font-size: 0.75rem;
-          font-weight: 600;
-          cursor: pointer;
-          color: #F08FA3;
-          transition: all 0.2s ease;
-        }
+.variant-add-btn {
+  border-radius: 999px;
+  border: 1px solid #F4C2C2;
+  background: #ffffff;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #F08FA3;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
 
         .variant-add-btn:hover {
           background: #F4C2C2;
@@ -793,61 +807,114 @@ const ShopPage = () => {
             font-size: 0.72rem;
             box-shadow: 0 2px 7px rgba(244, 194, 194, 0.5);
           }
+            .variant-toggle {
+    padding: 0 0.7rem 0.5rem;
+  }
+
+  .variant-toggle-btn {
+    font-size: 0.75rem;
+  }
+
+  .variant-panel {
+    padding: 0.5rem 0.7rem 0.7rem;
+  }
+
+  .variant-row {
+    padding: 0.5rem 0.6rem;
+    gap: 0.5rem;
+  }
+
+  .variant-left {
+    min-width: 120px;
+  }
+
+  .variant-thumb {
+    width: 42px;
+    height: 42px;
+  }
+
+  .variant-label {
+    font-size: 0.78rem;
+  }
+
+  .variant-caption {
+    font-size: 0.7rem;
+  }
+
+  .variant-price {
+    font-size: 0.78rem;
+  }
+
+  .variant-add-btn {
+    padding: 0.22rem 0.75rem;
+    font-size: 0.72rem;
+  }
         }
 
         /* Extra tightening for very small screens like Galaxy S5 (~360px) */
-        @media (max-width: 400px) {
-          .product-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.7rem;
-          }
+       @media (max-width: 400px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
 
-          .product-image-container {
-            height: 135px;
-          }
+  .product-image-container {
+    height: 135px;
+  }
 
-          .product-name {
-            font-size: 0.82rem;
-          }
+  .product-name {
+    font-size: 0.82rem;
+  }
 
-          .product-desc {
-            font-size: 0.7rem;
-          }
+  .product-desc {
+    font-size: 0.7rem;
+  }
 
-          .product-meta {
-            gap: 0.3rem;
-          }
+  .product-meta {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
 
-          .product-price {
-            font-size: 0.86rem;
-          }
+  .product-price {
+    font-size: 0.86rem;
+  }
 
-          .variant-thumb {
-            width: 40px;
-            height: 40px;
-          }
+  .variant-row {
+    padding: 0.4rem 0.5rem;
+    gap: 0.4rem;
+  }
 
-          .variant-row {
-            padding: 0.45rem 0.55rem;
-          }
+  .variant-left {
+    gap: 0.5rem;
+    min-width: 100px;
+  }
 
-          .variant-label {
-            font-size: 0.75rem;
-          }
+  .variant-thumb {
+    width: 38px;
+    height: 38px;
+  }
 
-          .variant-caption {
-            font-size: 0.68rem;
-          }
+  .variant-label {
+    font-size: 0.72rem;
+  }
 
-          .variant-price {
-            font-size: 0.76rem;
-          }
+  .variant-caption {
+    font-size: 0.66rem;
+  }
 
-          .variant-add-btn {
-            padding: 0.2rem 0.7rem;
-            font-size: 0.7rem;
-          }
-        }
+  .variant-price {
+    font-size: 0.74rem;
+  }
+
+  .variant-add-btn {
+    padding: 0.18rem 0.65rem;
+    font-size: 0.68rem;
+  }
+
+  .variant-actions {
+    gap: 0.4rem;
+  }
+}
 
         /* ---------- Modal + Slider ---------- */
         .product-modal-backdrop {
