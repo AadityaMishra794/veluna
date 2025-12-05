@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, User } from 'lucide-react';
 import logo from '../assets/logo.png';
+import Calendar from './Calendar';
 
 // Header Component
 const Header = ({ currentPage, navigateTo, isMenuOpen, setIsMenuOpen }) => {
@@ -223,6 +224,7 @@ const Header = ({ currentPage, navigateTo, isMenuOpen, setIsMenuOpen }) => {
             >
               Journal
             </a>
+            <Calendar />
           </div>
 
           <div className="nav-actions">
