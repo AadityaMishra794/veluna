@@ -1052,3 +1052,556 @@ const ShopPage = () => {
           color: #67645D;
           opacity: 0.9;
         }
+
+        .modal-desc {
+          font-size: 0.88rem;
+          color: #67645D;
+          line-height: 1.6;
+          margin-top: 0.3rem;
+        }
+
+        .modal-add-row {
+          margin-top: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .modal-add-wrapper {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .modal-section-title {
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: #2f2b26;
+          margin-bottom: 0.4rem;
+          margin-top: 1.2rem;
+        }
+
+        .modal-highlights {
+          border-radius: 14px;
+          border: 1px solid rgba(244, 194, 194, 0.35);
+          padding: 0.75rem 0.9rem;
+          background: #fffafa;
+          font-size: 0.8rem;
+        }
+
+        .modal-highlights-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.4rem 1rem;
+        }
+
+        .modal-highlights-item {
+          display: flex;
+          justify-content: space-between;
+          gap: 0.4rem;
+        }
+
+        .modal-highlight-label {
+          color: #67645D;
+          opacity: 0.85;
+        }
+
+        .modal-highlight-value {
+          color: #2f2b26;
+          font-weight: 500;
+        }
+
+        .modal-text-block {
+          font-size: 0.82rem;
+          color: #67645D;
+          line-height: 1.7;
+          border-radius: 14px;
+          border: 1px solid rgba(244, 194, 194, 0.32);
+          padding: 0.75rem 0.9rem;
+          background: #ffffff;
+        }
+
+        .product-modal-footer {
+          padding: 0.5rem 1.75rem 1.5rem;
+        }
+
+        .modal-more-row {
+          margin-top: 1rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .modal-more-pill {
+          font-size: 0.78rem;
+          border-radius: 999px;
+          padding: 0.4rem 0.9rem;
+          border: 1px solid rgba(244, 194, 194, 0.7);
+          background: #fff7f7;
+          color: #67645D;
+          font-weight: 500;
+          cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+          .product-modal {
+            max-width: 95vw;
+          }
+          .product-modal-content {
+            grid-template-columns: 1fr;
+            padding: 0 1.2rem 1.2rem;
+          }
+          .product-modal-footer {
+            padding: 0.3rem 1.2rem 1.2rem;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .product-modal {
+            max-height: 95vh;
+          }
+        }
+      `}</style>
+
+      {/* Search Bar */}
+      <div className="search-section">
+        <div className="search-container">
+          <div className="search-wrapper">
+            <Search className="search-icon" size={24} />
+            <input
+              type="text"
+              className="search-input"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            {!searchText && (
+              <div className="animated-placeholder">
+                {placeholders[placeholderIndex].substring(0, charIndex)}
+                <span className="typing-cursor"></span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Product Grid */}
+      <section className="section">
+        <div className="product-grid">
+          {filteredProducts.map((product) => {
+            const count = cartCounts[product.id] || 0;
+
+            return (
+              <div
+                className="product-card"
+                key={product.id}
+                onClick={() => setActiveProduct(product)}
+              >
+                <div className="product-image-container">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="product-img"
+                  />
+                  {product.tag && (
+                    <div className="product-tag">{product.tag}</div>
+                  )}
+                </div>
+
+                <div className="product-body">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-desc">{product.description}</p>
+                </div>
+
+                <div className="product-meta">
+                  <div className="price-block">
+                    <span className="product-price">{product.basePrice}</span>
+                    <span className="per-pack">per curated kit</span>
+                  </div>
+
+                  <div className="add-wrapper">
+                    {count === 0 ? (
+                      <button
+                        className="add-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          incrementCart(product.id);
+                        }}
+                      >
+                        ADD
+                      </button>
+                    ) : (
+                      <div
+                        className="qty-control"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          className="qty-btn"
+                          onClick={() => decrementCart(product.id)}
+                        >
+                          –
+                        </button>
+                        <span className="qty-count">{count}</span>
+                        <button
+                          className="qty-btn"
+                          onClick={() => incrementCart(product.id)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Variants toggle */}
+                <div
+                  className="variant-toggle"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    className="variant-toggle-btn"
+                    onClick={() => toggleVariants(product.id)}
+                  >
+                    {openProducts[product.id]
+                      ? "Hide kit options"
+                      : "View kit options"}
+                    <ChevronDown
+                      size={14}
+                      style={{
+                        transform: openProducts[product.id]
+                          ? "rotate(180deg)"
+                          : "rotate(0deg)",
+                        transition: "transform 0.2s ease",
+                      }}
+                    />
+                  </button>
+                </div>
+
+                {/* Variants panel */}
+                {openProducts[product.id] && (
+                  <div
+                    className="variant-panel"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {product.variants.map((variant) => (
+                      <div className="variant-row" key={variant.id}>
+                        <div className="variant-left">
+                          <img
+                            src={variant.image}
+                            alt={variant.label}
+                            className="variant-thumb"
+                          />
+                          <div className="variant-info">
+                            <span className="variant-label">
+                              {variant.label}
+                            </span>
+                            {variant.detail && (
+                              <span className="variant-caption">
+                                {variant.detail}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="variant-actions">
+                          <span className="variant-price">
+                            {variant.price}
+                          </span>
+                          <button
+                            className="variant-add-btn"
+                            onClick={() => handleAddVariant(product, variant)}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Product Modal */}
+      {activeProduct && (
+        <div
+          className="product-modal-backdrop"
+          onClick={() => setActiveProduct(null)}
+        >
+          <div
+            className="product-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="product-modal-header">
+              <button
+                className="modal-close-btn"
+                onClick={() => setActiveProduct(null)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="product-modal-body">
+              <div className="product-modal-content">
+                {/* Media slider */}
+                <div className="modal-media">
+                  <div className="modal-media-main">
+                    {(() => {
+                      const mediaArr = activeProduct.media;
+                      const mediaItem =
+                        mediaArr && mediaArr.length
+                          ? mediaArr[activeMediaIndex]
+                          : { type: "image", src: activeProduct.image };
+
+                      if (mediaItem.type === "video") {
+                        return (
+                          <video
+                            src={mediaItem.src}
+                            poster={mediaItem.poster}
+                            controls
+                          />
+                        );
+                      }
+                      return (
+                        <img
+                          src={mediaItem.src}
+                          alt={mediaItem.alt || activeProduct.name}
+                        />
+                      );
+                    })()}
+
+                    {activeProduct.media && activeProduct.media.length > 1 && (
+                      <>
+                        <button
+                          className="modal-slider-arrow left"
+                          onClick={handlePrevMedia}
+                        >
+                          <svg viewBox="0 0 24 24">
+                            <path
+                              d="M15 18l-6-6 6-6"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          className="modal-slider-arrow right"
+                          onClick={handleNextMedia}
+                        >
+                          <svg viewBox="0 0 24 24">
+                            <path
+                              d="M9 6l6 6-6 6"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {activeProduct.media && activeProduct.media.length > 0 && (
+                    <div className="modal-media-thumbs">
+                      {activeProduct.media.map((m, idx) => (
+                        <button
+                          key={idx}
+                          className={
+                            "modal-thumb" +
+                            (idx === activeMediaIndex ? " active" : "")
+                          }
+                          onClick={() => setActiveMediaIndex(idx)}
+                        >
+                          {m.type === "video" ? (
+                            <img
+                              src={m.poster || activeProduct.image}
+                              alt={m.alt || "video"}
+                            />
+                          ) : (
+                            <img
+                              src={m.src}
+                              alt={m.alt || "image"}
+                            />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Info side */}
+                <div className="product-modal-info">
+                  {activeProduct.tag && (
+                    <div className="modal-tag">{activeProduct.tag}</div>
+                  )}
+                  <h2 className="modal-title">{activeProduct.name}</h2>
+                  {activeProduct.size && (
+                    <div className="modal-size">{activeProduct.size}</div>
+                  )}
+
+                  <div className="modal-price-row">
+                    <span className="modal-price-main">
+                      {activeProduct.basePrice}
+                    </span>
+                    <span className="modal-price-sub">
+                      Inclusive of curated items
+                    </span>
+                  </div>
+
+                  <p className="modal-desc">{activeProduct.description}</p>
+
+                  <div className="modal-add-row">
+                    <div>
+                      <span className="modal-section-title">
+                        Comfort, care & hygiene
+                      </span>
+                    </div>
+                    <div className="modal-add-wrapper">
+                      {(() => {
+                        const count = cartCounts[activeProduct.id] || 0;
+                        if (count === 0) {
+                          return (
+                            <button
+                              className="add-btn"
+                              onClick={() =>
+                                incrementCart(activeProduct.id)
+                              }
+                            >
+                              ADD
+                            </button>
+                          );
+                        }
+                        return (
+                          <div className="qty-control">
+                            <button
+                              className="qty-btn"
+                              onClick={() =>
+                                decrementCart(activeProduct.id)
+                              }
+                            >
+                              –
+                            </button>
+                            <span className="qty-count">{count}</span>
+                            <button
+                              className="qty-btn"
+                              onClick={() =>
+                                incrementCart(activeProduct.id)
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+
+                  {activeProduct.variants?.length > 0 && (
+                    <>
+                      <div className="modal-section-title">
+                        Available kit options
+                      </div>
+                      <div className="modal-highlights">
+                        {activeProduct.variants.map((v) => (
+                          <div
+                            key={v.id}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: "0.5rem",
+                              padding: "0.25rem 0",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "0.8rem",
+                                color: "#2f2b26",
+                              }}
+                            >
+                              {v.label}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "0.8rem",
+                                fontWeight: 600,
+                                color: "#F08FA3",
+                              }}
+                            >
+                              {v.price}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer / Info blocks */}
+              <div className="product-modal-footer">
+                {activeProduct.highlights && (
+                  <>
+                    <div className="modal-section-title">Highlights</div>
+                    <div className="modal-highlights">
+                      <div className="modal-highlights-grid">
+                        {Object.entries(activeProduct.highlights).map(
+                          ([label, value]) => (
+                            <div
+                              key={label}
+                              className="modal-highlights-item"
+                            >
+                              <span className="modal-highlight-label">
+                                {label}
+                              </span>
+                              <span className="modal-highlight-value">
+                                {value}
+                              </span>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {activeProduct.howToUse && (
+                  <>
+                    <div className="modal-section-title">How to Use</div>
+                    <div className="modal-text-block">
+                      {activeProduct.howToUse}
+                    </div>
+                  </>
+                )}
+
+                {activeProduct.longDescription && (
+                  <>
+                    <div className="modal-section-title">Description</div>
+                    <div className="modal-text-block">
+                      {activeProduct.longDescription}
+                    </div>
+                  </>
+                )}
+
+                <div className="modal-more-row">
+                  <button className="modal-more-pill">
+                    Explore more Veluna kits
+                  </button>
+                  <button className="modal-more-pill">
+                    View similar wellness packs
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ShopPage;
