@@ -7,12 +7,6 @@ import img2 from "../assets/PERIOD FRIENDLY BEVERAGES .png";
 import img1 from "../assets/PERIOD PAIN RELIFE PRODUCTS .png";
 import img5 from "../assets/WELLNESS, CALM  & RELIEF PRODUCTS.png";
 
-/**
- * Each product can have:
- *  - media: [{ type: "image" | "video", src, poster?, alt? }]
- *  - variants
- *  - highlights, howToUse, longDescription
- */
 const products = [
   {
     id: 1,
@@ -38,7 +32,6 @@ const products = [
       { type: "image", src: img2, alt: "Comfort kit close-up" },
       {
         type: "video",
-        // replace this demo video with your own .mp4 if you like
         src: "https://www.w3schools.com/html/mov_bbb.mp4",
         poster: img1,
         alt: "How to use Essential Comfort Kit",
@@ -141,7 +134,7 @@ const products = [
     howToUse:
       "Store the products in a cool, dry place and use across cycles as per your needs for comfort, hygiene, and cravings.",
     longDescription:
-      "The Complete Care Bundle supports you across multiple cycles with comfort, nourishment, and emotional ease. It’s ideal if you like to stay stocked and prepared.",
+      "The Complete Care Bundle supports you across multiple cycles with comfort, nourishment, and emotional ease. It's ideal if you like to stay stocked and prepared.",
     media: [{ type: "image", src: img3, alt: "Complete Care Bundle" }],
     variants: [
       {
@@ -232,9 +225,9 @@ const products = [
       Type: "Subscription",
     },
     howToUse:
-      "Pick your flow type and we’ll deliver a fresh kit every month so you never have to worry about last-minute runs.",
+      "Pick your flow type and we'll deliver a fresh kit every month so you never have to worry about last-minute runs.",
     longDescription:
-      "Veluna’s Monthly Subscription keeps you covered, month after month. Tell us your flow, and we’ll curate kits that evolve with your needs.",
+      "Veluna's Monthly Subscription keeps you covered, month after month. Tell us your flow, and we'll curate kits that evolve with your needs.",
     media: [{ type: "image", src: img5, alt: "Monthly Subscription Kit" }],
     variants: [
       {
@@ -282,7 +275,7 @@ const ShopPage = () => {
     "Search sanitary pads...",
   ];
 
-  // Typing animation for search placeholder
+  // Typing animation
   useEffect(() => {
     const typingSpeed = isDeleting ? 50 : 150;
     const currentPlaceholder = placeholders[placeholderIndex];
@@ -307,7 +300,7 @@ const ShopPage = () => {
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, placeholderIndex, placeholders]);
 
-  // Reset media index when opening another product
+  // Reset slider when product changes
   useEffect(() => {
     if (activeProduct) setActiveMediaIndex(0);
   }, [activeProduct]);
@@ -354,16 +347,13 @@ const ShopPage = () => {
 
   const handleNextMedia = () => {
     if (!activeProduct || !activeProduct.media?.length) return;
-    setActiveMediaIndex((prev) =>
-      (prev + 1) % activeProduct.media.length
-    );
+    setActiveMediaIndex((prev) => (prev + 1) % activeProduct.media.length);
   };
 
   const handlePrevMedia = () => {
     if (!activeProduct || !activeProduct.media?.length) return;
     setActiveMediaIndex((prev) =>
-      (prev - 1 + activeProduct.media.length) %
-      activeProduct.media.length
+      (prev - 1 + activeProduct.media.length) % activeProduct.media.length
     );
   };
 
@@ -735,37 +725,6 @@ const ShopPage = () => {
           color: #ffffff;
         }
 
-        @media (max-width: 768px) {
-          .search-section {
-            padding: 1.5rem 1rem;
-          }
-          .search-input {
-            font-size: 1rem;
-            padding: 1.25rem 1.5rem 1.25rem 4rem;
-          }
-          .animated-placeholder {
-            font-size: 1rem;
-            left: 4rem;
-          }
-          .search-icon {
-            left: 1.5rem;
-          }
-          .product-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .product-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-          }
-          .product-image-container {
-            height: 150px;
-          }
-        }
-
         /* ---------- Modal + Slider ---------- */
         .product-modal-backdrop {
           position: fixed;
@@ -801,7 +760,6 @@ const ShopPage = () => {
           padding-bottom: 0.75rem;
         }
 
-        /* cute pink scrollbar */
         .product-modal-body::-webkit-scrollbar {
           width: 6px;
         }
@@ -970,6 +928,12 @@ const ShopPage = () => {
           color: #67645D;
           opacity: 0.9;
         }
+
+        .modal-desc {
+          font-size: 0.88rem;
+          color: #67645D;
+          line-height: 1.6;
+          margin-top: 0.3rem;
 
         .modal-desc {
           font-size: 0.88rem;
@@ -1240,7 +1204,7 @@ const ShopPage = () => {
         </div>
       </section>
 
-      {/* Product Modal with Image/Video Slider */}
+      {/* Product Modal */}
       {activeProduct && (
         <div
           className="product-modal-backdrop"
@@ -1259,10 +1223,9 @@ const ShopPage = () => {
               </button>
             </div>
 
-            {/* Scrollable modal body */}
             <div className="product-modal-body">
               <div className="product-modal-content">
-                {/* Slider */}
+                {/* Media slider */}
                 <div className="modal-media">
                   <div className="modal-media-main">
                     {(() => {
@@ -1353,7 +1316,7 @@ const ShopPage = () => {
                   )}
                 </div>
 
-                {/* Info */}
+                {/* Info side */}
                 <div className="product-modal-info">
                   {activeProduct.tag && (
                     <div className="modal-tag">{activeProduct.tag}</div>
@@ -1461,7 +1424,7 @@ const ShopPage = () => {
                 </div>
               </div>
 
-              {/* Footer content inside scrollable area */}
+              {/* Footer / Info blocks */}
               <div className="product-modal-footer">
                 {activeProduct.highlights && (
                   <>
@@ -1506,7 +1469,6 @@ const ShopPage = () => {
                   </>
                 )}
 
-                {/* Instamart-style finishing row */}
                 <div className="modal-more-row">
                   <button className="modal-more-pill">
                     Explore more Veluna kits
