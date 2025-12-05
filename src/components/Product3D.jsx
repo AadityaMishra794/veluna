@@ -19,7 +19,7 @@ function Model() {
   const { scene } = useGLTF("/models/mainModel.glb");
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const baseScale = isMobile ? 1.5 : 2.0;
+  const baseScale = isMobile ? 2.1 : 2.0;
 
   // Textures + materials + shadows
   useEffect(() => {
